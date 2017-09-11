@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Instal tmux
+    become: true
+    become_method: sudo
+    action: >
+      package name={{ item }} state=latest update_cache=yes
+    with_items:
+      - tmux
+      - vim
+      - docker.io
+      - htop
+      - vim-gui-common
+      - git
