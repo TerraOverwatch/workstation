@@ -1,0 +1,24 @@
+- vars:
+    pack: [
+      'vim',
+      'tree',
+      'tmux',
+      'mtr',
+      'skype',
+      'vivaldi'
+    ]
+    cask: [
+      'docker'
+    ]
+- name: Install brew packages
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - "{{ pack }}"
+- name: Install brew casks
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  with_item:
+    - "{{ cask }}" 

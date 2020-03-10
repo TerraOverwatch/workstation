@@ -1,0 +1,77 @@
+---
+- hosts: all
+  vars:
+    - brew_packages: [ 'macvim', 'vim', 'tree', 'tmux', 'mtr', 'git', 'pyenv', 'pyenv-virtualenv', 'python3', 'ansible', 'cmake', 'bash-completion@2' ]
+    - cask_packages: [ 'vivaldi', 'sublime-text', 'microsoft-teams', 'docker', 'visual-studio-code', 'opera', 'trailer']
+    - pip_packages: [ 'awscli', 'aws-shell', 'aws-adfs', 'boto3', 'virtualenv', 'qrcode[pil]' ]
+  tasks:
+    - name: Install Brew packages
+      homebrew: 
+        name: "{{ brew_packages }}"
+        state: present
+    - name: Install Cask packages
+      homebrew_cask:
+        name: "{{ cask_packages }}"
+        state: present
+    - name: Python Pip3 packages
+      pip:
+        executable: pip3
+        name: "{{ pip_packages }}"
+    # VIM folders
+    - name: Add .vim/bundle
+      file:
+        path: ~/.vim/bundle
+        state: directory
+        mode: 0750
+    - name: Add .vim/autoload
+      file:
+        path: ~/.vim/autoload
+        state: directory
+        mode: 0750
+    # VIM Plug ins
+    - name: Add Vundle to vim
+      git:
+        repo: 'https://github.com/VundleVim/Vundle.vim.git'
+        dest: ~/.vim/bundle/Vundle.vim
+    - name: Add NerdTree to vim
+      git:
+        repo: 'https://github.com/scrooloose/nerdtree.git'
+        dest: ~/.vim/bundle/nerdtree
+    - name: Add vim-terraform to vim
+      git:
+        repo: 'https://github.com/hashivim/vim-terraform.git'
+        dest: ~/.vim/bundle/vim-terraform
+    - name: Add python syntax to vim
+      git:
+        repo: 'https://github.com/vim-python/python-syntax.git'
+        dest: ~/.vim/bundle/python-syntax
+    - name: Add YouCompleteMe to vim
+      git:
+        repo: 'https://github.com/Valloric/YouCompleteMe.git'
+        dest: ~/.vim/bundle/YouCompleteMe
+        update: yes
+        force: yes
+    - name: Add vim auto-pairs
+      git:
+        repo: 'https://github.com/jiangmiao/auto-pairs.git'
+        dest: ~/.vim/bundle/auto-pairs
+    - name: Install vim-pathogen
+      get_url: 
+        url: 'https://tpo.pe/pathogen.vim'
+        dest: '~/.vim/autoload/pathogen.vim'
+    - name: Add pathogen to .vimrc
+      lineinfile:
+        path: ~/.vimrc
+        state: present
+        regexp: '^execute pathogen#infect.*$'
+        line: 'execute pathogen#infect()'
+    - lineinfile:
+        path: ~/.vimrc
+        state: present
+        regexp: '^syntax.*$'
+        line: 'syntax on'
+    - lineinfile:
+        path: ~/.vimrc
+        regexp: '^filetype plugin indent.*$'
+        line: 'filetype plugin indent on'  
+

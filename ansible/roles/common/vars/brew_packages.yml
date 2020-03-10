@@ -1,0 +1,11 @@
+---
+- vars:
+    pack: [
+      'vim',
+      'tree',
+      'tmux',
+      'mtr',
+      'skype',
+      'vivaldi'
+    ]
+

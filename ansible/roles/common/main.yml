@@ -1,0 +1,5 @@
+---
+# File: ./common/main.yml
+- vars_files:
+  - /vars/brew_packages.yml
+

@@ -1,9 +1,7 @@
-# DMon Workstation deployment
-## Purpose
-Deploy common workspace
+# Setting up MacOS for Infrastructure use.
 
-## Requirements
-
-* Ubuntu 16.04
-* Internet access
+## Quick Run:
+Step:
+1. `./pre-install.sh`
+2. `./run.sh`
 
