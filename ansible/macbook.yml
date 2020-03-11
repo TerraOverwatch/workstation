@@ -1,7 +1,7 @@
 ---
 - hosts: all
   vars:
-    - brew_packages: [ 'macvim', 'vim', 'tree', 'tmux', 'mtr', 'git', 'pyenv', 'pyenv-virtualenv', 'python3', 'ansible', 'cmake', 'bash-completion@2' ]
+    - brew_packages: [ 'macvim', 'tree', 'tmux', 'mtr', 'git', 'pyenv', 'pyenv-virtualenv', 'python3', 'ansible', 'cmake', 'bash-completion@2' ]
     - cask_packages: [ 'vivaldi', 'sublime-text', 'microsoft-teams', 'docker', 'visual-studio-code', 'opera', 'trailer']
     - pip_packages: [ 'awscli', 'aws-shell', 'aws-adfs', 'boto3', 'virtualenv', 'qrcode[pil]' ]
   tasks:
@@ -17,6 +17,11 @@
       pip:
         executable: pip3
         name: "{{ pip_packages }}"
+    - name: Add .vimrc
+      file:
+        path: ~/.vimrc
+        state: touch
+        mode: 0660
     # VIM folders
     - name: Add .vim/bundle
       file:
